@@ -31,7 +31,8 @@ http://moodydev.io
 /* VARIABLES */
 
 :root {
-  --main-color: #1a8fff;
+  /* --main-color: #1a8fff; */
+  --main-color: #F6A129;
   --text-color: #777;
   --text-color-light: #ccc;
   --border-color: #eee;
@@ -179,7 +180,8 @@ main {
 
 .calendar .body .selected {
   border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
+  /* border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%); */
+  border-image: linear-gradient(45deg, #F6A129 0%, #E68F10 40%);
   border-image-slice: 1;
 }
 
@@ -224,7 +226,7 @@ main {
 
 .calendar .body .cell:hover .bg,
 .calendar .body .selected .bg {
-  opacity: 0.05;
+  opacity: 0.10;
   transition: 0.5s ease-in;
 }
 

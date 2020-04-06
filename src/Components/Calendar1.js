@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as dateFns from "date-fns"
+import '../App.css'
 import './Calendar1.css'
 
 // Material ui
@@ -11,10 +12,17 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
     marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  calendar: {
     width: '100%',
   },
+  resultEvent: {
+    width: '100%'
+  },
+
   content: {
     margin: 10,
     width: '100%'
@@ -38,9 +46,7 @@ const Calendar1 = props => {
   const timeOutRef = useRef()
 
   useEffect(() => {
-    return () => {
-      clearTimeout(timeOutRef.current)
-    }
+    return () => clearTimeout(timeOutRef.current)
   }, [])
 
   const renderHeader = () => {
@@ -129,6 +135,43 @@ const Calendar1 = props => {
     return <div className="body">{rows}</div>;
   }
 
+  const renderResultEvent = () => {
+    return (
+      <Grid item xs={12} className={classes.root}>
+        <Paper className={classes.resultEvent}>
+          <section id="timeline" className="timeline-outer">
+            <div className="container" id="content">
+              <div className="row">
+                <div className="col s12 m12 l12">
+                  <h1 className="blue-text lighten-1 header">{dateFns.format(state.resultDate, 'd MMMM yyyy')}</h1>
+                  <ul className="timeline">
+
+                    <li className="event" data-date="(10:00 - 11:30)">
+                      <h3>Living Room</h3>
+                      <p>
+                        สัณหณัฐ งามฉายวงศ์ <br />
+                              MEAConnect: UI Meeting
+                            </p>
+                    </li>
+
+                    <li className="event" data-date="(10:15 - 17:15)">
+                      <h3>Meeting Room</h3>
+                      <p>
+                        ปวริศ โกวิทวีรธรรม <br />
+                              Connect
+                            </p>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        </Paper>
+      </Grid>
+    )
+  }
+
   const onDateClick = (day) => {
 
     setOpen(true)
@@ -140,7 +183,7 @@ const Calendar1 = props => {
         resultDate: day
       }))
       setOpen(false)
-    }, 1000)
+    }, 300)
   }
 
   const nextMonth = () => {
@@ -156,59 +199,29 @@ const Calendar1 = props => {
   };
 
   return (<>
-    <div className="calendar">
-      {renderHeader()}
-      {renderDays()}
-      {renderCells()}
-    </div>
-
-    {
-      (state.resultDate) ?
-
-        <Paper className={classes.root}>
-          <Grid container>
-            <Grid item>
-
-              <div class="main-container">
-                <section id="timeline" class="timeline-outer">
-                  <div class="container" id="content">
-                    <div class="row">
-                      <div class="col s12 m12 l12">
-                        <h1 class="blue-text lighten-1 header">{dateFns.format(state.resultDate, 'd MMMM yyyy')}</h1>
-                        <ul class="timeline">
-
-                          <li class="event" data-date="(10:00 - 11:30)">
-                            <h3>Living Room</h3>
-                            <p>
-                              สัณหณัฐ งามฉายวงศ์ <br />
-                              MEAConnect: UI Meeting
-                            </p>
-                          </li>
-
-                          <li class="event" data-date="(10:15 - 17:15)">
-                            <h3>Meeting Room</h3>
-                            <p>
-                              ปวริศ โกวิทวีรธรรม <br />
-                              Connect
-                            </p>
-                          </li>
-
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-            </Grid>
-          </Grid>
+    <Grid container>
+      <Grid item xs={12} className={classes.root}>
+        <Paper className={classes.calendar}>
+          <div className="calendar">
+            {renderHeader()}
+            {renderDays()}
+            {renderCells()}
+          </div>
         </Paper>
+      </Grid>
 
-        : null
-    }
+      {
+        (state.resultDate) ?
+          renderResultEvent()
+          : null
+      }
+
+    </Grid>
+
     <Backdrop className={classes.backdrop} open={open}>
       <CircularProgress color="inherit" />
     </Backdrop>
+
   </>)
 }
 
